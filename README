@@ -1,11 +1,11 @@
 == Wym Editor Filter
 
 Created by: Benny Degezelle - gorilla-webdesign.be
-Version: 0.3.3
+Version: 0.3.5
 Contact: benny AT gorilla-webdesign DOT be
 
 This filter adds a WYSIWYM editor to Radiant.
-
+It is aware of and interacts with the paperclipped and preview extension, but these are not required.
 
 == About WYMeditor
 
@@ -23,22 +23,7 @@ If your Radiant is pre-0.6.7, you need the shards extension. See http://groups.g
 
 == Installation
 
-From within your Radiant's instance folder, export this filter into vendor/extensions:
-
-Using ray:
-
-  rake ray:extension:install name=wym_editor_filter full_name=wymeditor-for-radiant hub=jomz
-
-Using git:
-  
-  git clone git://github.com/jomz/wymeditor-for-radiant.git vendor/extensions/wym_editor_filter
-  
-Using subversion:
-
-  cd path/to/instance/vendor/extensions
-  svn export svn://zuurstof.openminds.be/home/kaizer/svn/rails_stuff/radiant_extensions/wym_editor_filter
-  
-Now run this rake command to copy all needed files into the public folder:
+Run this rake command to copy all needed files into the public folder:
 
 	rake radiant:extensions:wym_editor_filter:install
 
@@ -47,6 +32,15 @@ That's it! You should now have "Wym Editor" in the filters dropdown on the page 
 
 == Changelog
 
+0.3.5:
+- Updated to wym 0.5b-2
+- move javascript into extension folder
+- updated editor & dialogs CSS to better fit into Radiant
+- auto-growing the editor when content gets longer than it can show
+- preview button uses radiant-preview-extension if installed
+Big thanks for all that to netzpirat (Michael Kessler)!!
+
+0.3.4: Updated to wym 0.5a-2, fixed bug where on_save, all edits made after switching to a different filter were lost
 0.3.3: Removed svn:external to wymeditor, managed through braid now. 
 Updated to wym 0.5a-1, and fixed empty <td> problem.
 0.3.2: Updated to work with radiant 0.6.5. Thanks David Piehler and Tim Blair
@@ -61,3 +55,4 @@ Jean-François Hovinne http://www.hovinne.com/
 Bjørn Arild Mæland
 David Piehler http://basicsgroup.com/
 Tim Blair http://tim.bla.ir/
+Michael Kessler http://blog.netzpiraten.ch/
