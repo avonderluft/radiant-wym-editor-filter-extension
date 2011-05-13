@@ -51,6 +51,9 @@ function init_load_wym_editor(){
       if ($('part_' + part_name + '_filter_id') && $F('part_' + part_name + '_filter_id') == 'WymEditor') {
         // mark textarea's that need to be wymified
         $('part_'+part_name+'_content').addClassName('wymified');
+      if ($F('part_' + i + '_filter_id') == 'WymEditor') {
+				// mark textarea's that need to be wymified
+				$('part_'+i+'_draft_content').addClassName('wymified');
       }
     }
 		// boot wym on marked textarea's
@@ -76,7 +79,7 @@ function init_load_wym_editor(){
 function text_input_method(index, filter) {
 	if (index != null) {
 		// control for page parts
-		var elem = $('part_'+(index)+'_content');
+		var elem = $('part_'+(index)+'_draft_content');
 		if (filter == "WymEditor") {
 			boot_wym(elem);
 		} else {
@@ -406,11 +409,10 @@ function unboot_all_wym() {
 	{
 		var parts = $$('.part');
     for(var i=0;i< parts.length;i++) {
-			if (/part-([\w\d-]+)/i.test(parts[i].id))
-	      var part_name = RegExp.$1;
+			
       // Find all parts that have WYM set as filter
-      if ($F('part_' + part_name + '_filter_id') == 'WymEditor')
-        unboot_wym($('part_'+ part_name +'_content'));
+      if ($F('part_' + i + '_filter_id') == 'WymEditor')
+        unboot_wym($('part_'+ i +'_draft_content'));
     }
   } else if ($('snippet_filter')) {                // We're on the snippet edit screen
     if ($F('snippet_filter') == 'WymEditor') {
@@ -451,8 +453,11 @@ function bind_droppability(box) {
         var asset_id = element.id.split('_').last();
         var tag = '<a href="'+ link.href +'">'+ link.title +'</a>'
       }
-      if (/(part-|page\_)([\w\d-]+)/i.test(box.ancestors()[2].ancestors()[1].id))
-        var wym_index = editors["part_" + RegExp.$2  + "_content"];
+      // if (/(part-|page\_)([\w\d-]+)/i.test(box.ancestors()[2].ancestors()[1].id))
+      //  var wym_index = editors["part_" + RegExp.$2  + "_content"];
+      var text_area_index = parseInt(box.ancestors()[2].ancestors()[1].id.split('-')[1]) - 1;
+      var wym_index = editors["part_" + text_area_index  + "_draft_content"];
+
       var wymm = WYMeditor.INSTANCES[wym_index];
       wymm.insert(tag);
     }
